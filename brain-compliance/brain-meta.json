@@ -1,0 +1,25 @@
+{
+  "agent_key": "compliance",
+  "propose_tool": "agent.action.propose",
+  "action_types": ["anomaly_flag"],
+  "synced": {
+    "category": "business",
+    "risk_level": "high",
+    "default_authority": "notify_only",
+    "has_default_action": false,
+    "capabilities": ["compliance_monitor"],
+    "minimum_confidence": 0.8,
+    "triggers": [
+      "policy.violation",
+      "approval.missing",
+      "audit.gap_detected"
+    ],
+    "intent_patterns": [
+      "check compliance",
+      "flag a policy violation",
+      "review an audit gap"
+    ],
+    "readable_data": ["policy:read", "audit:read", "ledger:read"],
+    "required_evidence": ["policy_decision", "audit_event"]
+  }
+}

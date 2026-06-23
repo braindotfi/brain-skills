@@ -18,7 +18,7 @@ signal, then proceed. Volume is not distribution.
 - [x] brain-payment          (money-mover: payment_intent.propose)
 - [x] brain-treasury         (money-mover: payment_intent.propose)
 - [x] brain-revenue-intel    (notify-only)
-- [ ] brain-compliance       (high-risk, notify-only)
+- [x] brain-compliance       (high-risk, notify-only)
 
 ## Excluded (not in this repo)
 The 8 consumer agents (personal_budget, bill_management, savings,

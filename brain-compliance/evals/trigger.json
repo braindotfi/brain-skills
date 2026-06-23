@@ -1,0 +1,15 @@
+{
+  "skill_name": "brain-compliance",
+  "should_trigger": [
+    "Check whether this action complied with policy",
+    "Flag this suspected policy violation",
+    "Why is the required approval missing?",
+    "Review this gap in the audit trail",
+    "Document a compliance finding for this transaction"
+  ],
+  "should_not_trigger": [
+    "Check whether this card charge is fraud",
+    "Build a packet for this chargeback",
+    "Pay the approved invoice"
+  ]
+}
