@@ -15,7 +15,7 @@ signal, then proceed. Volume is not distribution.
 
 ## Tier 3 — only when data justifies
 - [x] brain-dispute
-- [ ] brain-payment          (money-mover: payment_intent.propose)
+- [x] brain-payment          (money-mover: payment_intent.propose)
 - [ ] brain-treasury         (money-mover: payment_intent.propose)
 - [ ] brain-revenue-intel    (notify-only)
 - [ ] brain-compliance       (high-risk, notify-only)

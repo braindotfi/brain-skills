@@ -1,0 +1,15 @@
+{
+  "skill_name": "brain-payment",
+  "should_trigger": [
+    "Pay this approved supplier invoice",
+    "Schedule the bill payment for Friday",
+    "Prepare an ACH for this invoice",
+    "Wire the approved amount to this vendor",
+    "This bill is due tomorrow, pay it from operating cash"
+  ],
+  "should_not_trigger": [
+    "Forecast whether we can afford this invoice",
+    "Check whether the vendor's new bank details are risky",
+    "Follow up with a customer who owes us money"
+  ]
+}
