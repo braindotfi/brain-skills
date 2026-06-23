@@ -1,0 +1,15 @@
+{
+  "skill_name": "brain-treasury",
+  "should_trigger": [
+    "Sweep idle cash above our reserve",
+    "Move excess balance to our approved yield account",
+    "Top up the payroll account before Friday",
+    "Plan liquidity after the runway changed",
+    "Rebalance cash between our operating and treasury accounts"
+  ],
+  "should_not_trigger": [
+    "Forecast our cash without moving anything",
+    "Pay this supplier invoice",
+    "Analyze which customers may churn"
+  ]
+}

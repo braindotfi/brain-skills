@@ -1,0 +1,27 @@
+{
+  "agent_key": "treasury",
+  "propose_tool": "payment_intent.propose",
+  "action_types": ["ach_outbound", "wire", "onchain_transfer"],
+  "synced": {
+    "category": "business",
+    "risk_level": "medium",
+    "default_authority": "propose",
+    "has_default_action": false,
+    "capabilities": ["treasury_sweep"],
+    "minimum_confidence": 0.8,
+    "triggers": [
+      "cash.balance_high",
+      "cash.balance_low",
+      "runway.changed",
+      "yield_opportunity.detected"
+    ],
+    "intent_patterns": [
+      "sweep idle cash",
+      "move excess balance to yield",
+      "top up low balance account",
+      "plan liquidity"
+    ],
+    "readable_data": ["ledger:read", "wiki:read"],
+    "required_evidence": ["balance"]
+  }
+}
