@@ -93,10 +93,15 @@ for (const dir of skillDirs) {
     }
   }
 
-  // 3. No-auto guarantee: high-risk and money-movers must not advertise a default action.
-  if ((ref.risk_level === "high" || MONEY_MOVERS.has(key)) && ref.has_default_action !== false) {
-    // This would be a spec problem, not a skill problem, but flag it.
-    errors.push(`${dir}: spec says has_default_action=true for a high-risk/money-mover agent; expected false`);
+  // 3. Money-mover no-auto guarantee: payment and treasury must never carry a
+  //    default action, so no financial action can fire without an explicit/event
+  //    match. This is the one no-auto invariant that is universal in the source.
+  //    It is deliberately NOT generalized to all high-risk agents: fraud_anomaly is
+  //    high-risk but notify_only, and its default action "notify" executes nothing,
+  //    so the source legitimately allows it. The presence/absence of a default
+  //    action for every other agent is already validated as a synced field above.
+  if (MONEY_MOVERS.has(key) && ref.has_default_action !== false) {
+    errors.push(`${dir}: money-mover "${key}" must have has_default_action=false (got true)`);
   }
 }
 
