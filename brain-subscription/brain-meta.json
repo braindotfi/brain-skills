@@ -1,0 +1,25 @@
+{
+  "agent_key": "subscription",
+  "propose_tool": "agent.action.propose",
+  "action_types": ["other"],
+  "synced": {
+    "category": "agnostic",
+    "risk_level": "low",
+    "default_authority": "propose",
+    "has_default_action": true,
+    "capabilities": ["subscription_review"],
+    "minimum_confidence": 0.7,
+    "triggers": [
+      "recurring_charge.detected",
+      "vendor.duplicate_detected",
+      "subscription.price_changed"
+    ],
+    "intent_patterns": [
+      "review my subscriptions",
+      "cancel duplicate subscription",
+      "flag a price increase"
+    ],
+    "readable_data": ["ledger:read", "wiki:read"],
+    "required_evidence": ["transaction"]
+  }
+}
