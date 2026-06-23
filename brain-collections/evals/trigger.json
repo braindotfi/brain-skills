@@ -1,0 +1,15 @@
+{
+  "skill_name": "brain-collections",
+  "should_trigger": [
+    "Follow up on this overdue invoice",
+    "Chase the customer whose payment failed",
+    "Draft a reminder for an unpaid invoice",
+    "Which aging receivables need attention this week?",
+    "Help me collect from our late-paying customers"
+  ],
+  "should_not_trigger": [
+    "Review this new vendor's bank details",
+    "Forecast our cash runway",
+    "Is this card transaction suspicious?"
+  ]
+}

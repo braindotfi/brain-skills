@@ -9,7 +9,7 @@ signal, then proceed. Volume is not distribution.
 - [x] brain-vendor-risk      (high-risk: confirm/reject ceiling, no auto)
 
 ## Tier 2 — fast-follow on signal
-- [ ] brain-collections
+- [x] brain-collections
 - [ ] brain-fraud-anomaly    (notify-only; freeze_card only on explicit request)
 - [ ] brain-cash-forecast
 

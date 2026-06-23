@@ -1,0 +1,25 @@
+{
+  "agent_key": "collections",
+  "propose_tool": "agent.action.propose",
+  "action_types": ["other"],
+  "synced": {
+    "category": "business",
+    "risk_level": "medium",
+    "default_authority": "propose",
+    "has_default_action": true,
+    "capabilities": ["collections_followup"],
+    "minimum_confidence": 0.75,
+    "triggers": [
+      "invoice.overdue",
+      "payment.failed",
+      "receivable.aging_threshold_crossed"
+    ],
+    "intent_patterns": [
+      "follow up on overdue invoice",
+      "chase late payment",
+      "remind customer about unpaid invoice"
+    ],
+    "readable_data": ["ledger:read", "wiki:read"],
+    "required_evidence": ["invoice", "counterparty"]
+  }
+}
