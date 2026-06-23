@@ -1,0 +1,29 @@
+{
+  "agent_key": "vendor_risk",
+  "propose_tool": "agent.action.propose",
+  "action_types": ["anomaly_flag"],
+  "synced": {
+    "category": "business",
+    "risk_level": "high",
+    "default_authority": "propose",
+    "has_default_action": false,
+    "capabilities": ["vendor_risk"],
+    "minimum_confidence": 0.8,
+    "triggers": [
+      "vendor.created",
+      "vendor.bank_details_changed",
+      "payment.destination_changed"
+    ],
+    "intent_patterns": [
+      "check vendor risk",
+      "review a new vendor",
+      "verify a bank detail change"
+    ],
+    "readable_data": ["ledger:read", "wiki:read", "raw:read"],
+    "required_evidence": [
+      "vendor",
+      "payment_destination",
+      "counterparty_history"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "skill_name": "brain-vendor-risk",
+  "should_trigger": [
+    "Check this vendor for risk before onboarding them",
+    "Review a new supplier we are about to pay",
+    "Verify this vendor's changed bank details",
+    "Is this new payment destination safe?",
+    "Our supplier emailed a different account number"
+  ],
+  "should_not_trigger": [
+    "Review all of my recurring subscriptions",
+    "Match these statement lines to ledger transactions",
+    "Send a reminder for an overdue customer invoice"
+  ]
+}

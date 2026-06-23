@@ -6,7 +6,7 @@ signal, then proceed. Volume is not distribution.
 ## Tier 1 — ship first
 - [x] brain-reconciliation  (reference implementation / clone template)
 - [x] brain-subscription
-- [ ] brain-vendor-risk      (high-risk: confirm/reject ceiling, no auto)
+- [x] brain-vendor-risk      (high-risk: confirm/reject ceiling, no auto)
 
 ## Tier 2 — fast-follow on signal
 - [ ] brain-collections
