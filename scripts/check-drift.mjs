@@ -1,0 +1,108 @@
+#!/usr/bin/env node
+/**
+ * Drift check: validates each brain-<name>/brain-meta.json against spec/brain-agents.json.
+ *
+ * - Definition-derived fields (category, risk_level, default_authority,
+ *   has_default_action, triggers, intent_patterns, readable_data,
+ *   required_evidence, minimum_confidence, capabilities) MUST deep-equal the spec.
+ *   The spec is generated from brain-core, so a mismatch means a published skill
+ *   has drifted from the live agent definition.
+ * - Skill-authored routing fields (propose_tool, action_types) are validated
+ *   against the MCP tool enums and the money-mover rule, not against the spec.
+ *
+ * Zero dependencies. Run: node scripts/check-drift.mjs
+ */
+import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const spec = JSON.parse(readFileSync(join(ROOT, "spec", "brain-agents.json"), "utf8"));
+
+const AGENT_ACTION_TYPES = new Set([
+  "reconciliation_match", "anomaly_flag", "categorize_transaction",
+  "merge_counterparty", "link_document", "other",
+]);
+const PAYMENT_ACTION_TYPES = new Set([
+  "ach_outbound", "ach_inbound", "wire", "onchain_transfer",
+  "erp_writeback", "card_payment", "x402_settle", "escrow_release",
+]);
+const MONEY_MOVERS = new Set(["payment", "treasury"]);
+const SYNCED = [
+  "category", "risk_level", "default_authority", "has_default_action",
+  "capabilities", "minimum_confidence", "triggers", "intent_patterns",
+  "readable_data", "required_evidence",
+];
+
+const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+const errors = [];
+const skillDirs = readdirSync(ROOT, { withFileTypes: true })
+  .filter((d) => d.isDirectory() && d.name.startsWith("brain-"))
+  .map((d) => d.name);
+
+if (skillDirs.length === 0) {
+  console.error("No brain-* skill directories found.");
+  process.exit(1);
+}
+
+for (const dir of skillDirs) {
+  const metaPath = join(ROOT, dir, "brain-meta.json");
+  if (!existsSync(metaPath)) {
+    errors.push(`${dir}: missing brain-meta.json`);
+    continue;
+  }
+  let meta;
+  try {
+    meta = JSON.parse(readFileSync(metaPath, "utf8"));
+  } catch (e) {
+    errors.push(`${dir}: brain-meta.json is not valid JSON (${e.message})`);
+    continue;
+  }
+
+  const key = meta.agent_key;
+  const ref = spec.agents[key];
+  if (!ref) {
+    errors.push(`${dir}: agent_key "${key}" not in spec (off-launch-set or renamed?)`);
+    continue;
+  }
+
+  // 1. Definition-derived fields must match the spec exactly.
+  for (const field of SYNCED) {
+    if (!eq(meta.synced?.[field], ref[field])) {
+      errors.push(
+        `${dir}: drift on "${field}"\n    skill: ${JSON.stringify(meta.synced?.[field])}\n    spec:  ${JSON.stringify(ref[field])}`,
+      );
+    }
+  }
+
+  // 2. Routing: propose_tool + action_types are skill-authored, checked by rule.
+  const tool = meta.propose_tool;
+  if (MONEY_MOVERS.has(key)) {
+    if (tool !== "payment_intent.propose") {
+      errors.push(`${dir}: money-mover must use payment_intent.propose, got "${tool}"`);
+    }
+  } else if (tool !== "agent.action.propose") {
+    errors.push(`${dir}: non-money skill must use agent.action.propose, got "${tool}"`);
+  }
+
+  const allowed = tool === "payment_intent.propose" ? PAYMENT_ACTION_TYPES : AGENT_ACTION_TYPES;
+  for (const at of meta.action_types ?? []) {
+    if (!allowed.has(at)) {
+      errors.push(`${dir}: action_type "${at}" not valid for ${tool}`);
+    }
+  }
+
+  // 3. No-auto guarantee: high-risk and money-movers must not advertise a default action.
+  if ((ref.risk_level === "high" || MONEY_MOVERS.has(key)) && ref.has_default_action !== false) {
+    // This would be a spec problem, not a skill problem, but flag it.
+    errors.push(`${dir}: spec says has_default_action=true for a high-risk/money-mover agent; expected false`);
+  }
+}
+
+if (errors.length > 0) {
+  console.error(`Drift check FAILED (${errors.length}):\n`);
+  for (const e of errors) console.error("  - " + e);
+  process.exit(1);
+}
+console.log(`Drift check passed for ${skillDirs.length} skill(s).`);

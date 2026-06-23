@@ -1,0 +1,15 @@
+{
+  "skill_name": "brain-reconciliation",
+  "should_trigger": [
+    "Help me close out March, the bank and the books don't line up",
+    "Why is my clearing account not zero?",
+    "I have a bunch of unmatched bank transactions, can you sort them",
+    "Match this statement to the ledger",
+    "Resolve the unreconciled items for Q2"
+  ],
+  "should_not_trigger": [
+    "What's our current cash runway?",
+    "Pay the AWS invoice that's due Friday",
+    "Is this $4,000 charge from a new merchant fraud?"
+  ]
+}

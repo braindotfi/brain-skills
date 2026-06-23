@@ -1,0 +1,17 @@
+{
+  "agent_key": "reconciliation",
+  "propose_tool": "agent.action.propose",
+  "action_types": ["reconciliation_match"],
+  "synced": {
+    "category": "agnostic",
+    "risk_level": "low",
+    "default_authority": "propose",
+    "has_default_action": true,
+    "capabilities": ["reconciliation_review"],
+    "minimum_confidence": 0.7,
+    "triggers": ["transaction.unreconciled", "statement.imported", "reconciliation.candidate_found"],
+    "intent_patterns": ["reconcile transactions", "match statement to ledger", "resolve unreconciled transaction"],
+    "readable_data": ["ledger:read"],
+    "required_evidence": ["transaction"]
+  }
+}
