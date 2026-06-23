@@ -1,0 +1,15 @@
+{
+  "skill_name": "brain-cash-forecast",
+  "should_trigger": [
+    "Forecast our cash for the next 13 weeks",
+    "What is our runway at the current burn rate?",
+    "Project cash flow through the end of the year",
+    "When will we run short of cash?",
+    "Can we afford this large payable next month?"
+  ],
+  "should_not_trigger": [
+    "Pay this approved invoice",
+    "Follow up with a customer about an overdue bill",
+    "Is this unfamiliar card transaction fraudulent?"
+  ]
+}

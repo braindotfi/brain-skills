@@ -11,7 +11,7 @@ signal, then proceed. Volume is not distribution.
 ## Tier 2 — fast-follow on signal
 - [x] brain-collections
 - [x] brain-fraud-anomaly    (notify-only; freeze_card only on explicit request)
-- [ ] brain-cash-forecast
+- [x] brain-cash-forecast
 
 ## Tier 3 — only when data justifies
 - [ ] brain-dispute
