@@ -1,0 +1,25 @@
+{
+  "agent_key": "fraud_anomaly",
+  "propose_tool": "agent.action.propose",
+  "action_types": ["anomaly_flag"],
+  "synced": {
+    "category": "agnostic",
+    "risk_level": "high",
+    "default_authority": "notify_only",
+    "has_default_action": true,
+    "capabilities": ["fraud_anomaly"],
+    "minimum_confidence": 0.85,
+    "triggers": [
+      "transaction.unusual",
+      "merchant.risk_detected",
+      "duplicate_charge.detected"
+    ],
+    "intent_patterns": [
+      "is this transaction fraud",
+      "flag suspicious activity",
+      "freeze my card"
+    ],
+    "readable_data": ["ledger:read", "wiki:read", "raw:read"],
+    "required_evidence": ["transaction"]
+  }
+}
