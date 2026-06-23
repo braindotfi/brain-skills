@@ -17,7 +17,7 @@ signal, then proceed. Volume is not distribution.
 - [x] brain-dispute
 - [x] brain-payment          (money-mover: payment_intent.propose)
 - [x] brain-treasury         (money-mover: payment_intent.propose)
-- [ ] brain-revenue-intel    (notify-only)
+- [x] brain-revenue-intel    (notify-only)
 - [ ] brain-compliance       (high-risk, notify-only)
 
 ## Excluded (not in this repo)

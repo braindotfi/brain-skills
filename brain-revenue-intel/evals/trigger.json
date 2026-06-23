@@ -1,0 +1,15 @@
+{
+  "skill_name": "brain-revenue-intel",
+  "should_trigger": [
+    "Analyze why revenue changed this month",
+    "Which customers are showing churn risk?",
+    "Find expansion opportunities in our accounts",
+    "Whose payment behavior has deteriorated?",
+    "Which upcoming renewals need attention?"
+  ],
+  "should_not_trigger": [
+    "Send a reminder for this overdue invoice",
+    "Forecast our cash runway",
+    "Move excess cash to the yield account"
+  ]
+}
