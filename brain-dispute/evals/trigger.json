@@ -1,0 +1,15 @@
+{
+  "skill_name": "brain-dispute",
+  "should_trigger": [
+    "Gather evidence for this payment dispute",
+    "Respond to the chargeback we just received",
+    "Build a dispute packet before Friday's deadline",
+    "Why does this contested payment not match our records?",
+    "Collect everything we have for this card dispute"
+  ],
+  "should_not_trigger": [
+    "Pay this approved supplier invoice",
+    "Check whether this unfamiliar charge is fraud",
+    "Remind a customer about an overdue receivable"
+  ]
+}

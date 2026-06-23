@@ -1,0 +1,25 @@
+{
+  "agent_key": "dispute",
+  "propose_tool": "agent.action.propose",
+  "action_types": ["link_document"],
+  "synced": {
+    "category": "business",
+    "risk_level": "medium",
+    "default_authority": "propose",
+    "has_default_action": true,
+    "capabilities": ["dispute_evidence"],
+    "minimum_confidence": 0.75,
+    "triggers": [
+      "dispute.created",
+      "chargeback.received",
+      "payment.mismatch"
+    ],
+    "intent_patterns": [
+      "gather dispute evidence",
+      "respond to a chargeback",
+      "build a dispute packet"
+    ],
+    "readable_data": ["ledger:read", "wiki:read", "raw:read"],
+    "required_evidence": ["dispute", "transaction"]
+  }
+}
