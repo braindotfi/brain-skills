@@ -1,0 +1,29 @@
+{
+  "agent_key": "payment",
+  "propose_tool": "payment_intent.propose",
+  "action_types": ["ach_outbound", "wire"],
+  "synced": {
+    "category": "business",
+    "risk_level": "medium",
+    "default_authority": "propose",
+    "has_default_action": false,
+    "capabilities": ["payment_propose"],
+    "minimum_confidence": 0.85,
+    "triggers": [
+      "bill.due_soon",
+      "invoice.approved",
+      "payment.scheduled"
+    ],
+    "intent_patterns": [
+      "pay this bill",
+      "schedule a payment",
+      "approve and pay invoice"
+    ],
+    "readable_data": ["ledger:read"],
+    "required_evidence": [
+      "invoice",
+      "counterparty",
+      "payment_destination"
+    ]
+  }
+}

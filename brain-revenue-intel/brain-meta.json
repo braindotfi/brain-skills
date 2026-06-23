@@ -1,0 +1,25 @@
+{
+  "agent_key": "revenue_intel",
+  "propose_tool": "agent.action.propose",
+  "action_types": ["other"],
+  "synced": {
+    "category": "business",
+    "risk_level": "low",
+    "default_authority": "notify_only",
+    "has_default_action": true,
+    "capabilities": ["revenue_intel"],
+    "minimum_confidence": 0.65,
+    "triggers": [
+      "revenue.changed",
+      "customer.payment_behavior_changed",
+      "contract.renewal_upcoming"
+    ],
+    "intent_patterns": [
+      "analyze revenue",
+      "flag churn risk",
+      "find expansion opportunities"
+    ],
+    "readable_data": ["ledger:read", "wiki:read"],
+    "required_evidence": ["invoice", "transaction"]
+  }
+}

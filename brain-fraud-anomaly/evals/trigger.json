@@ -1,0 +1,15 @@
+{
+  "skill_name": "brain-fraud-anomaly",
+  "should_trigger": [
+    "Is this transaction fraud?",
+    "Flag this suspicious card activity",
+    "I do not recognize this merchant",
+    "I was charged twice for the same purchase",
+    "Freeze my card, I did not make this transaction"
+  ],
+  "should_not_trigger": [
+    "Review this supplier's new bank details",
+    "Remind a customer about their overdue invoice",
+    "Show me all recurring subscriptions"
+  ]
+}

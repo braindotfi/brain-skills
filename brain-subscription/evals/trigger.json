@@ -1,0 +1,15 @@
+{
+  "skill_name": "brain-subscription",
+  "should_trigger": [
+    "Review my subscriptions and tell me what I can cut",
+    "Cancel the duplicate subscription for our design software",
+    "Find all recurring charges from the last six months",
+    "Flag any subscriptions that raised their prices",
+    "Why are we paying this vendor twice every month?"
+  ],
+  "should_not_trigger": [
+    "Match this bank statement to the ledger",
+    "Check whether this new vendor is risky",
+    "Forecast our cash balance for next quarter"
+  ]
+}
