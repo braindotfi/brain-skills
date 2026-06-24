@@ -20,6 +20,7 @@ import { fileURLToPath } from "node:url";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SKILLS_ROOT = join(ROOT, "skills");
 const spec = JSON.parse(readFileSync(join(ROOT, "spec", "brain-agents.json"), "utf8"));
+const SPEC_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 
 const AGENT_ACTION_TYPES = new Set([
   "reconciliation_match", "anomaly_flag", "categorize_transaction",
@@ -39,6 +40,14 @@ const SYNCED = [
 const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 const errors = [];
+const generatedAtMs = Date.parse(spec.generated_at);
+if (!Number.isFinite(generatedAtMs)) {
+  errors.push(`spec: generated_at is missing or invalid (${JSON.stringify(spec.generated_at)})`);
+} else if (Date.now() - generatedAtMs > SPEC_MAX_AGE_MS) {
+  errors.push(
+    `spec: generated_at ${spec.generated_at} is older than 30 days; regenerate from brain-core`,
+  );
+}
 const skillDirs = readdirSync(SKILLS_ROOT, { withFileTypes: true })
   .filter((d) => d.isDirectory() && d.name.startsWith("brain-"))
   .map((d) => d.name);

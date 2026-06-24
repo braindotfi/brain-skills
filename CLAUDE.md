@@ -21,6 +21,10 @@ Run `npm test` before publishing changes. At minimum, keep
 When changing Claude distribution metadata, also run
 `claude plugin validate . --strict`.
 
+`scripts/check-drift.mjs` rejects a generated specification older than 30 days.
+Regenerate it from `brain-core/tools/skills-spec/generate.ts`; never refresh the
+timestamp by hand.
+
 ## Agensi packages
 
 Run `npm run build:agensi` to build the 11 archives under `dist/agensi/`. The

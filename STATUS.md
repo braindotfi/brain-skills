@@ -12,6 +12,7 @@ signal, then proceed. Volume is not distribution.
 - [x] Version `0.1.0-beta.1`
 - [x] Strict manifest, package, and isolated install smoke tests
 - [x] Byte-identical shared MCP reference check
+- [x] Generated agent-spec 30-day staleness guard
 - [ ] Live MCP smoke test (blocked until `https://mcp.brain.fi` is deployed)
 
 ## Launch preparation
