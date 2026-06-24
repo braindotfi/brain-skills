@@ -17,8 +17,9 @@ proposal-only skills.
 ## Required checks
 
 Run `npm test` before publishing changes. At minimum, keep
-`node scripts/check-drift.mjs` green. When changing Claude distribution
-metadata, also run `claude plugin validate . --strict`.
+`node scripts/check-drift.mjs` and `node scripts/check-references.mjs` green.
+When changing Claude distribution metadata, also run
+`claude plugin validate . --strict`.
 
 ## Agensi packages
 

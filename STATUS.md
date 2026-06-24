@@ -11,6 +11,7 @@ signal, then proceed. Volume is not distribution.
 - [x] Plugin-root Brain MCP configuration
 - [x] Version `0.1.0-beta.1`
 - [x] Strict manifest, package, and isolated install smoke tests
+- [x] Byte-identical shared MCP reference check
 - [ ] Live MCP smoke test (blocked until `https://mcp.brain.fi` is deployed)
 
 ## Launch preparation

@@ -13,5 +13,7 @@ jobs:
           node-version: "22"
       - name: Install Claude Code
         run: npm install --global @anthropic-ai/claude-code@2.1.168
+      - name: Check shared MCP reference copies
+        run: npm run check:references
       - name: Validate plugin package
         run: npm test
