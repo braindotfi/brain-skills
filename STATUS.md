@@ -13,6 +13,14 @@ signal, then proceed. Volume is not distribution.
 - [x] Strict manifest, package, and isolated install smoke tests
 - [ ] Live MCP smoke test (blocked until `https://mcp.brain.fi` is deployed)
 
+## Launch preparation
+
+- [x] Agensi eight-point static security review (`docs/security-review.md`)
+- [ ] Agensi skill-form packages
+- [ ] Phase 0 verification script and runbook
+- [ ] Plugin hardening and listing readiness
+- [ ] Listing content drafts
+
 ## Tier 1 — ship first
 - [x] brain-reconciliation  (reference implementation / clone template)
 - [x] brain-subscription
