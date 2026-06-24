@@ -9,6 +9,7 @@
     "test:package": "node scripts/smoke-plugin.mjs",
     "test:install": "node scripts/smoke-install.mjs",
     "test:live": "node scripts/smoke-live-mcp.mjs",
+    "verify:phase0": "node scripts/verify-phase0.mjs",
     "test": "npm run check:drift && npm run test:package && npm run test:install && npm run test:live"
   }
 }
