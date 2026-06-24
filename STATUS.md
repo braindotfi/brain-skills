@@ -3,6 +3,16 @@
 Launch set: 11 skills. Build in tier order. Ship Tier 1, gather install and usage
 signal, then proceed. Volume is not distribution.
 
+## Distribution
+
+- [x] All 11 canonical skills under `skills/`
+- [x] `brain-finance` Claude plugin manifest
+- [x] `brain-skills` marketplace manifest
+- [x] Plugin-root Brain MCP configuration
+- [x] Version `0.1.0-beta.1`
+- [x] Strict manifest, package, and isolated install smoke tests
+- [ ] Live MCP smoke test (blocked until `https://mcp.brain.fi` is deployed)
+
 ## Tier 1 — ship first
 - [x] brain-reconciliation  (reference implementation / clone template)
 - [x] brain-subscription

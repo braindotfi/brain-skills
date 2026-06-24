@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * Drift check: validates each brain-<name>/brain-meta.json against spec/brain-agents.json.
+ * Drift check: validates each skills/brain-<name>/brain-meta.json against
+ * spec/brain-agents.json.
  *
  * - Definition-derived fields (category, risk_level, default_authority,
  *   has_default_action, triggers, intent_patterns, readable_data,
@@ -17,6 +18,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const SKILLS_ROOT = join(ROOT, "skills");
 const spec = JSON.parse(readFileSync(join(ROOT, "spec", "brain-agents.json"), "utf8"));
 
 const AGENT_ACTION_TYPES = new Set([
@@ -37,7 +39,7 @@ const SYNCED = [
 const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 const errors = [];
-const skillDirs = readdirSync(ROOT, { withFileTypes: true })
+const skillDirs = readdirSync(SKILLS_ROOT, { withFileTypes: true })
   .filter((d) => d.isDirectory() && d.name.startsWith("brain-"))
   .map((d) => d.name);
 
@@ -47,7 +49,7 @@ if (skillDirs.length === 0) {
 }
 
 for (const dir of skillDirs) {
-  const metaPath = join(ROOT, dir, "brain-meta.json");
+  const metaPath = join(SKILLS_ROOT, dir, "brain-meta.json");
   if (!existsSync(metaPath)) {
     errors.push(`${dir}: missing brain-meta.json`);
     continue;

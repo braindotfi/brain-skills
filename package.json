@@ -1,0 +1,14 @@
+{
+  "name": "brain-finance-plugin",
+  "version": "0.1.0-beta.1",
+  "private": true,
+  "description": "Distribution and validation scripts for the Brain Finance agent plugin.",
+  "type": "module",
+  "scripts": {
+    "check:drift": "node scripts/check-drift.mjs",
+    "test:package": "node scripts/smoke-plugin.mjs",
+    "test:install": "node scripts/smoke-install.mjs",
+    "test:live": "node scripts/smoke-live-mcp.mjs",
+    "test": "npm run check:drift && npm run test:package && npm run test:install && npm run test:live"
+  }
+}

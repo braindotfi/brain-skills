@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "brain-finance",
+  "version": "0.1.0-beta.1",
+  "description": "Eleven portable finance skills that connect Claude to Brain's policy-gated MCP proposal surface.",
+  "author": {
+    "name": "Brain Finance, Inc.",
+    "url": "https://brain.fi"
+  },
+  "homepage": "https://docs.brain.fi/build/use-brain-agent-skills",
+  "repository": "https://github.com/braindotfi/brain-skills",
+  "license": "MIT",
+  "keywords": ["finance", "mcp", "agents", "payments", "treasury", "reconciliation"],
+  "skills": ["./skills/"],
+  "mcpServers": "./.mcp.json"
+}
