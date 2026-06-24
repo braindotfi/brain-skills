@@ -22,6 +22,7 @@ signal, then proceed. Volume is not distribution.
 - [x] Root `SECURITY.md` and injection-rejection skill examples
 - [x] Agensi skill-form package builder
 - [x] Phase 0 verification script and two-host runbook
+- [x] Required OAuth discovery and consent contract documented
 - [x] Plugin hardening and listing-readiness copy
 - [x] Official, community, and Agensi listing drafts
 

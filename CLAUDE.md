@@ -42,6 +42,8 @@ gitignored output and must not be committed.
 Phase 0 requires a human, two hosts, a sandbox Brain tenant, and OAuth consent.
 Do not run it automatically. `scripts/verify-phase0.mjs` must self-skip unless
 explicitly enabled and must reject an auto-approved payment result.
+The OAuth discovery sequence documented in `_shared/brain-mcp.md` is a required
+server contract until Phase 0 proves it live.
 
 ## Listing metadata
 
