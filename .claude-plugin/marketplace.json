@@ -1,0 +1,23 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "brain-skills",
+  "description": "Official Brain Finance plugins for policy-gated financial agents.",
+  "owner": {
+    "name": "Brain Finance, Inc.",
+    "url": "https://brain.fi"
+  },
+  "plugins": [
+    {
+      "name": "brain-finance",
+      "version": "0.1.0-beta.1",
+      "description": "Eleven finance skills plus the official Brain MCP connection.",
+      "author": {
+        "name": "Brain Finance, Inc.",
+        "url": "https://brain.fi"
+      },
+      "source": ".",
+      "category": "productivity",
+      "homepage": "https://docs.brain.fi/build/use-brain-agent-skills"
+    }
+  ]
+}
