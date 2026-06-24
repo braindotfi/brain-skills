@@ -24,7 +24,8 @@ metadata, also run `claude plugin validate . --strict`.
 
 Run `npm run build:agensi` to build the 11 archives under `dist/agensi/`. The
 build injects the manual MCP prerequisite without changing source `SKILL.md`
-files and validates each archived trigger fixture.
+files and validates each archived trigger fixture. `dist/` is generated,
+gitignored output and must not be committed.
 
 ## Phase 0
 

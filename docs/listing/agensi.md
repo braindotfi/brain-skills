@@ -37,8 +37,9 @@ subject to tenant scopes, policy, approvals, and audit controls.
 
 ## Package files
 
-After the Agensi packaging PR lands, publish the 11 archives from
-`dist/agensi/`:
+Build the 11 archives on demand with `npm run build:agensi`, then publish them
+from `dist/agensi/`. Generated archives are intentionally gitignored and are not
+stored in the repository:
 
 - `brain-reconciliation.zip`
 - `brain-subscription.zip`
