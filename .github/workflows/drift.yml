@@ -15,5 +15,7 @@ jobs:
         run: npm install --global @anthropic-ai/claude-code@2.1.168
       - name: Check shared MCP reference copies
         run: npm run check:references
+      - name: Check skill safety and frontmatter invariants
+        run: npm run check:invariants
       - name: Validate plugin package
         run: npm test

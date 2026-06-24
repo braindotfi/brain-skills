@@ -19,9 +19,12 @@ proposal-only skills.
 ## Required checks
 
 Run `npm test` before publishing changes. At minimum, keep
-`node scripts/check-drift.mjs` and `node scripts/check-references.mjs` green.
-When changing Claude distribution metadata, also run
-`claude plugin validate . --strict`.
+`node scripts/check-drift.mjs`, `node scripts/check-references.mjs`, and
+`node scripts/check-invariants.mjs` green. When changing Claude distribution
+metadata, also run `claude plugin validate . --strict`.
+
+Every skill frontmatter description is one physical line and 1–499 characters.
+Payment and Treasury must not name any `.execute`, `.settle`, or `.sign` tool.
 
 `scripts/check-drift.mjs` rejects a generated specification older than 30 days.
 Regenerate it from `brain-core/tools/skills-spec/generate.ts`; never refresh the
