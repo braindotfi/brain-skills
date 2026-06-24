@@ -6,9 +6,11 @@
   "type": "module",
   "scripts": {
     "check:drift": "node scripts/check-drift.mjs",
+    "build:agensi": "node scripts/build-agensi.mjs",
     "test:package": "node scripts/smoke-plugin.mjs",
+    "test:agensi": "npm run build:agensi",
     "test:install": "node scripts/smoke-install.mjs",
     "test:live": "node scripts/smoke-live-mcp.mjs",
-    "test": "npm run check:drift && npm run test:package && npm run test:install && npm run test:live"
+    "test": "npm run check:drift && npm run test:package && npm run test:agensi && npm run test:install && npm run test:live"
   }
 }
