@@ -23,6 +23,28 @@ copies independently; edit `_shared/brain-mcp.md` and re-copy.
   MUST NOT contain a token, key, tenant id, or any secret. If credentials are not
   present, surface that to the user and stop. Do not guess or fabricate them.
 
+### Required OAuth discovery flow
+
+The public server is required to support the MCP OAuth 2.0 discovery sequence:
+
+1. An unauthenticated MCP request returns HTTP `401` with a
+   `WWW-Authenticate: Bearer` challenge whose `resource_metadata` value points
+   to `https://mcp.brain.fi/.well-known/oauth-protected-resource`.
+2. The host reads that protected-resource metadata to discover the authorization
+   server and the scopes understood by Brain.
+3. The host starts the authorization flow, presents the requested scopes to the
+   user, and obtains explicit user consent.
+4. The authorization server issues the runtime bearer token to the host. The
+   token is not written into the skill or plugin.
+5. Brain validates the token, tenant, and granted scopes. The token's
+   `scope_hash` must match the tenant-authorized value in
+   `BrainMCPAgentRegistry` before a tool call is accepted.
+
+This describes the required server contract, not proof that the public flow is
+live. Phase 0 must verify the `401` challenge, metadata discovery, user consent,
+token issuance, authorized read, and proposal call against
+`https://mcp.brain.fi` before launch.
+
 ## Read tools (scope-gated)
 
 | Tool | Scope | Returns |

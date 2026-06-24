@@ -1,13 +1,29 @@
-# Brain Finance Plugin
+# Brain Finance: policy-gated finance skills for Claude
 
-One distributable plugin containing 11 portable agent skills for
-[Brain](https://brain.fi), the financial second brain. Each `SKILL.md` recipe
-teaches an agent how to drive Brain's MCP server to a specific finance outcome:
-reconciliation, vendor risk, collections, payments, treasury, and more.
+The official `brain-finance` Claude Code plugin bundles 11 MCP agent skills for
+financial reconciliation, accounts payable, payments, treasury, cash-flow
+forecasting, collections, fraud detection, vendor risk, subscription review,
+disputes, revenue intelligence, and compliance.
 
 Brain analyzes and proposes. You decide. Your systems execute. These skills never
 move money and never execute anything; they read your financial state within
 tenant-signed policy and return proposals for you to approve.
+
+## Included finance skills
+
+| Skill                  | Finance workflow                                        |
+| ---------------------- | ------------------------------------------------------- |
+| `brain-reconciliation` | Match bank statements and ledger transactions           |
+| `brain-subscription`   | Review recurring charges, duplicates, and price changes |
+| `brain-vendor-risk`    | Assess vendors and changed payment destinations         |
+| `brain-collections`    | Prepare overdue-invoice follow-up                       |
+| `brain-fraud-anomaly`  | Investigate suspicious or duplicate transactions        |
+| `brain-cash-forecast`  | Forecast cash flow, burn, and runway                    |
+| `brain-dispute`        | Build evidence-backed dispute packets                   |
+| `brain-payment`        | Prepare policy-gated payment-intent proposals           |
+| `brain-treasury`       | Prepare policy-gated sweeps and account top-ups         |
+| `brain-revenue-intel`  | Surface churn, renewal, and expansion signals           |
+| `brain-compliance`     | Review policy decisions, approvals, and audit gaps      |
 
 ## What is in here
 
@@ -55,6 +71,9 @@ stop. Execution happens inside Brain, behind a deterministic pre-execution gate
 and human approval where policy requires it. The two money-related skills
 (`brain-payment`, `brain-treasury`) propose payment intents only; they never sign
 or settle.
+
+Brain Finance is non-custodial. The plugin never holds funds, stores credentials,
+signs transactions, or bypasses the tenant's policy and approval controls.
 
 ## How these stay correct
 
