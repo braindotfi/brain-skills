@@ -38,8 +38,11 @@ Evidence:
 
 - `.mcp.json:2-6` defines one MCP server, `brain`, at
   `https://mcp.brain.fi`.
-- `_shared/brain-mcp.md:26-39` enumerates the scope-gated read tools.
-- `_shared/brain-mcp.md:41-60` limits writes to Brain's two proposal tools.
+- `_shared/brain-mcp.md:59-67` enumerates the scope-gated read tools.
+- `_shared/brain-mcp.md:68-72` lists the proposal and write-capable tools.
+  Writes are limited to `agent.action.propose`, `payment_intent.propose`,
+  `payment_intent.cancel`, and `raw.contribute`; `payment_intent.list` is
+  read-only.
 - `scripts/smoke-plugin.mjs:94-99` rejects a package whose MCP path, transport,
   or URL differs from the expected Brain configuration.
 
@@ -142,8 +145,9 @@ permission model. Brain independently enforces tenant and scope authorization.
 Evidence:
 
 - `_shared/brain-mcp.md:20-24` binds authorization to the runtime JWT, tenant,
-  granted scopes, and on-chain `scope_hash`.
-- `_shared/brain-mcp.md:38-39` states that scope checks occur for every call.
+  granted scopes, and on-chain `scope_hash` on Base Sepolia testnet. Mainnet
+  deployment and external contract audit are pending.
+- `_shared/brain-mcp.md:53-55` states that scope checks occur for every call.
 - `scripts/smoke-install.mjs:9-11` isolates validation in a temporary
   `CLAUDE_CONFIG_DIR`.
 - `scripts/smoke-install.mjs:40-42` removes that temporary directory after the
