@@ -61,8 +61,9 @@ deployed.
 ## Authentication
 
 The plugin connects to `https://mcp.brain.fi`. Brain resolves authentication at
-runtime and verifies the agent's scope on chain. Skills contain no credentials.
-See `_shared/brain-mcp.md`.
+runtime and verifies the agent's scope on chain (Base Sepolia testnet; mainnet
+deployment and external contract audit are pending). Skills contain no
+credentials. See `_shared/brain-mcp.md`.
 
 ## The no-execute guarantee
 

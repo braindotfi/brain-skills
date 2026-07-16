@@ -18,7 +18,9 @@ copies independently; edit `_shared/brain-mcp.md` and re-copy.
 ## Authentication (resolved at runtime, never embedded)
 
 - `Authorization: Bearer <jwt>`. The JWT carries the tenant and the granted scopes.
-- The JWT's on-chain `scope_hash` is verified against `BrainMCPAgentRegistry`.
+- The JWT's on-chain `scope_hash` is verified against `BrainMCPAgentRegistry`
+  on Base Sepolia testnet. Mainnet deployment and external contract audit are
+  pending.
 - The operator supplies these credentials through the host at call time. A skill
   MUST NOT contain a token, key, tenant id, or any secret. If credentials are not
   present, surface that to the user and stop. Do not guess or fabricate them.
@@ -38,7 +40,8 @@ The public server is required to support the MCP OAuth 2.0 discovery sequence:
    token is not written into the skill or plugin.
 5. Brain validates the token, tenant, and granted scopes. The token's
    `scope_hash` must match the tenant-authorized value in
-   `BrainMCPAgentRegistry` before a tool call is accepted.
+   `BrainMCPAgentRegistry` on Base Sepolia testnet before a tool call is
+   accepted. Mainnet deployment and external contract audit are pending.
 
 This describes the required server contract, not proof that the public flow is
 live. Phase 0 must verify the `401` challenge, metadata discovery, user consent,
