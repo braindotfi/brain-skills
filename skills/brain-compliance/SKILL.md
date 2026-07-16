@@ -53,30 +53,30 @@ audit gap, not proof of the underlying prohibited action.
 
 ## The propose call
 
-Use `agent.action.propose` with `action_type: "anomaly_flag"`.
+Use `agent.action.propose` with `action.kind: "anomaly_flag"`.
 
 ```
 agent.action.propose {
-  tenant_id: <from auth context>,
-  action_type: "anomaly_flag",
-  payload: {
-    operation: "compliance_review",
-    policy_decision_id,
-    audit_event_id,
-    classification,
-    control_expectation,
-    observed_evidence,
-    evidence_gaps,
-    confidence,
-    basis
-  },
-  linked_entities: [{ type: "policy_decision", id: <policy_decision_id> }],
-  idempotency_key: <unique per proposed compliance finding>
+  action: {
+    kind: "anomaly_flag",
+    payload: {
+      operation: "compliance_review",
+      policy_decision_id,
+      audit_event_id,
+      classification,
+      control_expectation,
+      observed_evidence,
+      evidence_gaps,
+      confidence,
+      basis
+    },
+    linked_entities: [{ type: "policy_decision", id: <policy_decision_id> }]
+  }
 }
 ```
 
-Every proposal needs its own `idempotency_key`. The call runs through Policy and
-returns a proposal id, policy decision, and next step.
+The bearer token supplies the tenant. The call runs through Policy and returns a
+proposal id, policy decision, and next step.
 
 ## High-risk authority ceiling
 

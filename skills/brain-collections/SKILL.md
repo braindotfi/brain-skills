@@ -52,31 +52,31 @@ Do not draft around an assumed balance or due date.
 
 ## The propose call
 
-Use `agent.action.propose` with `action_type: "other"`.
+Use `agent.action.propose` with `action.kind: "other"`.
 
 ```
 agent.action.propose {
-  tenant_id: <from auth context>,
-  action_type: "other",
-  payload: {
-    operation: "collections_followup",
-    invoice_id,
-    counterparty_id,
-    recommendation,
-    draft_message,
-    confidence,
-    basis
-  },
-  linked_entities: [
-    { type: "invoice", id: <invoice_id> },
-    { type: "counterparty", id: <counterparty_id> }
-  ],
-  idempotency_key: <unique per proposed follow-up>
+  action: {
+    kind: "other",
+    payload: {
+      operation: "collections_followup",
+      invoice_id,
+      counterparty_id,
+      recommendation,
+      draft_message,
+      confidence,
+      basis
+    },
+    linked_entities: [
+      { type: "invoice", id: <invoice_id> },
+      { type: "counterparty", id: <counterparty_id> }
+    ]
+  }
 }
 ```
 
-Every proposal needs its own `idempotency_key`. The call runs through Policy and
-returns a proposal id, policy decision, and next step.
+The bearer token supplies the tenant. The call runs through Policy and returns a
+proposal id, policy decision, and next step.
 
 ## Proposal boundary
 
@@ -105,7 +105,7 @@ the appropriate follow-up at or above 0.75 confidence.
 **Example 2**
 User: "Which late customers should we chase this week?"
 Behaviour: review overdue obligations, prioritize evidence-backed cases, and
-propose separate follow-ups with unique idempotency keys.
+propose separate follow-ups for review.
 
 **Example 3**
 User: "Send a harsh reminder for every unpaid invoice."

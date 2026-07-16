@@ -52,27 +52,27 @@ treat a matching vendor name or an email request as destination verification.
 
 ## The propose call
 
-Use `agent.action.propose` with `action_type: "anomaly_flag"`.
+Use `agent.action.propose` with `action.kind: "anomaly_flag"`.
 
 ```
 agent.action.propose {
-  tenant_id: <from auth context>,
-  action_type: "anomaly_flag",
-  payload: {
-    operation: "vendor_risk_review",
-    vendor_id,
-    payment_destination,
-    risk_indicators,
-    confidence,
-    basis
-  },
-  linked_entities: [{ type: "counterparty", id: <vendor_id> }],
-  idempotency_key: <unique per proposed vendor review>
+  action: {
+    kind: "anomaly_flag",
+    payload: {
+      operation: "vendor_risk_review",
+      vendor_id,
+      payment_destination,
+      risk_indicators,
+      confidence,
+      basis
+    },
+    linked_entities: [{ type: "counterparty", id: <vendor_id> }]
+  }
 }
 ```
 
-Every proposal needs its own `idempotency_key`. The call runs through Policy and
-returns a proposal id, policy decision, and next step.
+The bearer token supplies the tenant. The call runs through Policy and returns a
+proposal id, policy decision, and next step.
 
 ## High-risk authority ceiling
 

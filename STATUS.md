@@ -12,7 +12,7 @@ signal, then proceed. Volume is not distribution.
 - [x] Version `0.1.0-beta.1`
 - [x] Strict manifest, package, and isolated install smoke tests
 - [x] Byte-identical shared MCP reference check
-- [x] Money-mover and frontmatter invariant checks
+- [x] All-skill no-execute and frontmatter invariant checks
 - [x] Generated agent-spec 30-day staleness guard
 - [ ] Live MCP smoke test (blocked until `https://mcp.brain.fi` is deployed)
 
@@ -26,19 +26,19 @@ signal, then proceed. Volume is not distribution.
 - [x] Plugin hardening and listing-readiness copy
 - [x] Official, community, and Agensi listing drafts
 
-## Tier 1 — ship first
+## Tier 1: ship first
 
 - [x] brain-reconciliation (reference implementation / clone template)
 - [x] brain-subscription
 - [x] brain-vendor-risk (high-risk: confirm/reject ceiling, no auto)
 
-## Tier 2 — fast-follow on signal
+## Tier 2: fast-follow on signal
 
 - [x] brain-collections
 - [x] brain-fraud-anomaly (notify-only; freeze_card only on explicit request)
 - [x] brain-cash-forecast
 
-## Tier 3 — only when data justifies
+## Tier 3: only when data justifies
 
 - [x] brain-dispute
 - [x] brain-payment (money-mover: payment_intent.propose)

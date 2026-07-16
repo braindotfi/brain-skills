@@ -49,29 +49,29 @@ payment.
 
 ## The propose call
 
-Use `agent.action.propose` with `action_type: "other"`.
+Use `agent.action.propose` with `action.kind: "other"`.
 
 ```
 agent.action.propose {
-  tenant_id: <from auth context>,
-  action_type: "other",
-  payload: {
-    operation: "revenue_intelligence_notification",
-    comparison_period,
-    revenue_changes,
-    churn_signals,
-    expansion_signals,
-    watch_items,
-    confidence,
-    basis
-  },
-  linked_entities: [{ type: "counterparty", id: <customer_id> }],
-  idempotency_key: <unique per proposed revenue finding>
+  action: {
+    kind: "other",
+    payload: {
+      operation: "revenue_intelligence_notification",
+      comparison_period,
+      revenue_changes,
+      churn_signals,
+      expansion_signals,
+      watch_items,
+      confidence,
+      basis
+    },
+    linked_entities: [{ type: "counterparty", id: <customer_id> }]
+  }
 }
 ```
 
-Every proposal needs its own `idempotency_key`. The call runs through Policy and
-returns a proposal id, policy decision, and next step.
+The bearer token supplies the tenant. The call runs through Policy and returns a
+proposal id, policy decision, and next step.
 
 ## Notify-only boundary
 

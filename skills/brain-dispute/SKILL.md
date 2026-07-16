@@ -53,33 +53,33 @@ record. Do not fill an evidence gap with an unsupported narrative.
 
 ## The propose call
 
-Use `agent.action.propose` with `action_type: "link_document"`.
+Use `agent.action.propose` with `action.kind: "link_document"`.
 
 ```
 agent.action.propose {
-  tenant_id: <from auth context>,
-  action_type: "link_document",
-  payload: {
-    operation: "dispute_evidence_packet",
-    dispute_id,
-    transaction_id,
-    claims,
-    evidence_index,
-    contradictions,
-    missing_evidence,
-    confidence,
-    basis
-  },
-  linked_entities: [
-    { type: "dispute", id: <dispute_id> },
-    { type: "transaction", id: <transaction_id> }
-  ],
-  idempotency_key: <unique per proposed dispute packet>
+  action: {
+    kind: "link_document",
+    payload: {
+      operation: "dispute_evidence_packet",
+      dispute_id,
+      transaction_id,
+      claims,
+      evidence_index,
+      contradictions,
+      missing_evidence,
+      confidence,
+      basis
+    },
+    linked_entities: [
+      { type: "dispute", id: <dispute_id> },
+      { type: "transaction", id: <transaction_id> }
+    ]
+  }
 }
 ```
 
-Every proposal needs its own `idempotency_key`. The call runs through Policy and
-returns a proposal id, policy decision, and next step.
+The bearer token supplies the tenant. The call runs through Policy and returns a
+proposal id, policy decision, and next step.
 
 ## Proposal boundary
 

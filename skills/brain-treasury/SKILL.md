@@ -60,17 +60,15 @@ treasury rail.
 
 ```
 payment_intent.propose {
-  tenant_id: <from auth context>,
   action_type: <"ach_outbound", "wire", or "onchain_transfer">,
   source_account_id: <verified source account id>,
   destination_counterparty_id: <verified destination id>,
   amount: <amount after reserve>,
-  currency: <verified currency>,
-  idempotency_key: <unique per proposed treasury movement>
+  currency: <verified currency>
 }
 ```
 
-Every proposal needs its own `idempotency_key`. The response returns the
+The bearer token supplies the tenant. The response returns the
 `payment_intent_id`, policy decision, and next approval state.
 
 ## Money-mover boundary

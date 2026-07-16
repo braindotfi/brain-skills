@@ -46,20 +46,20 @@ not been ingested. Do not invent lines.
 
 ## The propose call
 
-Use `agent.action.propose` with `action_type: "reconciliation_match"`.
+Use `agent.action.propose` with `action.kind: "reconciliation_match"`.
 
 ```
 agent.action.propose {
-  tenant_id: <from auth context>,
-  action_type: "reconciliation_match",
-  payload: { transaction_id, matched_to, confidence, basis },
-  linked_entities: [{ type: "transaction", id: <txn_id> }],
-  idempotency_key: <unique per proposed match>
+  action: {
+    kind: "reconciliation_match",
+    payload: { transaction_id, matched_to, confidence, basis },
+    linked_entities: [{ type: "transaction", id: <txn_id> }]
+  }
 }
 ```
 
-Every proposal needs its own `idempotency_key`. The call runs through Policy and
-lands as a `proposals` row; the response carries the policy decision and next step.
+The bearer token supplies the tenant. The call runs through Policy and lands as a
+`proposals` row; the response carries the policy decision and next step.
 
 ## No-execute boundary
 
