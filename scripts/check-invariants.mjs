@@ -6,7 +6,6 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SKILLS_ROOT = join(ROOT, "skills");
-const MONEY_MOVERS = new Set(["brain-payment", "brain-treasury"]);
 const FORBIDDEN_TOOL = /\b[A-Za-z0-9_-]+\.(?:execute|settle|sign)\b/g;
 const DESCRIPTION_LIMIT = 500; // Marketplace descriptions must be one line and <500 characters.
 const errors = [];
@@ -40,19 +39,17 @@ for (const skillName of skillNames) {
     );
   }
 
-  if (MONEY_MOVERS.has(skillName)) {
-    const metaText = readFileSync(
-      join(SKILLS_ROOT, skillName, "brain-meta.json"),
-      "utf8",
+  const metaText = readFileSync(
+    join(SKILLS_ROOT, skillName, "brain-meta.json"),
+    "utf8",
+  );
+  const forbidden = [
+    ...`${skillText}\n${metaText}`.matchAll(FORBIDDEN_TOOL),
+  ].map((match) => match[0]);
+  if (forbidden.length > 0) {
+    errors.push(
+      `${skillName}: references forbidden consequential tool(s): ${[...new Set(forbidden)].join(", ")}`,
     );
-    const forbidden = [
-      ...`${skillText}\n${metaText}`.matchAll(FORBIDDEN_TOOL),
-    ].map((match) => match[0]);
-    if (forbidden.length > 0) {
-      errors.push(
-        `${skillName}: money-mover references forbidden consequential tool(s): ${[...new Set(forbidden)].join(", ")}`,
-      );
-    }
   }
 }
 

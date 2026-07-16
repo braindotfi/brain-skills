@@ -57,19 +57,17 @@ payment rail: `"ach_outbound"` or `"wire"`.
 
 ```
 payment_intent.propose {
-  tenant_id: <from auth context>,
   action_type: <"ach_outbound" or "wire">,
   source_account_id: <verified account id>,
   destination_counterparty_id: <verified counterparty id>,
   amount: <verified invoice amount>,
   currency: <verified invoice currency>,
   obligation_id: <obligation id>,
-  invoice_id: <invoice id when present>,
-  idempotency_key: <unique per proposed payment>
+  invoice_id: <invoice id when present>
 }
 ```
 
-Every proposal needs its own `idempotency_key`. The response returns the
+The bearer token supplies the tenant. The response returns the
 `payment_intent_id`, policy decision, and next approval state.
 
 ## Money-mover boundary

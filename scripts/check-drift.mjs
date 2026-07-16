@@ -20,7 +20,12 @@ import { fileURLToPath } from "node:url";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SKILLS_ROOT = join(ROOT, "skills");
 const spec = JSON.parse(readFileSync(join(ROOT, "spec", "brain-agents.json"), "utf8"));
+const mcpToolSpec = JSON.parse(
+  readFileSync(join(ROOT, "spec", "brain-mcp-tools.json"), "utf8"),
+);
 const SPEC_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
+const MCP_DOC_START = "<!-- BEGIN GENERATED MCP TOOL ARGUMENTS -->";
+const MCP_DOC_END = "<!-- END GENERATED MCP TOOL ARGUMENTS -->";
 
 const AGENT_ACTION_TYPES = new Set([
   "reconciliation_match", "anomaly_flag", "categorize_transaction",
@@ -38,6 +43,72 @@ const SYNCED = [
 ];
 
 const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+function typeName(schema) {
+  if (schema.type === "array") {
+    return `array<${typeName(schema.items ?? { type: "unknown" })}>`;
+  }
+  return schema.type ?? "unknown";
+}
+
+function notesFor(schema) {
+  const notes = [];
+  if (Array.isArray(schema.enum)) notes.push(`enum: ${schema.enum.join(", ")}`);
+  if (typeof schema.pattern === "string") notes.push(`pattern: ${schema.pattern}`);
+  if (typeof schema.format === "string") notes.push(`format: ${schema.format}`);
+  if (typeof schema.minimum === "number") notes.push(`minimum: ${schema.minimum}`);
+  if (typeof schema.maximum === "number") notes.push(`maximum: ${schema.maximum}`);
+  if (typeof schema.minLength === "number") notes.push(`minLength: ${schema.minLength}`);
+  if (typeof schema.maxLength === "number") notes.push(`maxLength: ${schema.maxLength}`);
+  if (schema.default !== undefined) notes.push(`default: ${schema.default}`);
+  if (schema.additionalProperties === true) notes.push("additional properties allowed");
+  if (typeof schema.description === "string") notes.push(schema.description);
+  return notes.length === 0 ? "-" : notes.join("; ");
+}
+
+function tableCell(value) {
+  return String(value).replaceAll("|", "\\|").replaceAll("\n", " ");
+}
+
+function renderMcpToolTables(tools) {
+  const lines = [MCP_DOC_START];
+  for (const tool of tools) {
+    const required = new Set(tool.input_schema.required ?? []);
+    lines.push("");
+    lines.push(`### \`${tool.name}\` (scope \`${tool.scope}\`)`);
+    lines.push("");
+    lines.push(tool.description);
+    lines.push("");
+    lines.push("| Arg | Type | Required | Notes |");
+    lines.push("| --- | --- | --- | --- |");
+    for (const [arg, schema] of Object.entries(tool.input_schema.properties ?? {})) {
+      lines.push(
+        `| \`${arg}\` | ${tableCell(typeName(schema))} | ${required.has(arg) ? "yes" : "no"} | ${tableCell(notesFor(schema))} |`,
+      );
+    }
+  }
+  lines.push("");
+  lines.push(MCP_DOC_END);
+  return lines.join("\n");
+}
+
+function checkMcpToolDocs(errors) {
+  const docPath = join(ROOT, "_shared", "brain-mcp.md");
+  const doc = readFileSync(docPath, "utf8");
+  const start = doc.indexOf(MCP_DOC_START);
+  const end = doc.indexOf(MCP_DOC_END);
+  if (start === -1 || end === -1 || end < start) {
+    errors.push("_shared/brain-mcp.md: missing generated MCP tool argument block");
+    return;
+  }
+  const actual = doc.slice(start, end + MCP_DOC_END.length);
+  const expected = renderMcpToolTables(mcpToolSpec.tools);
+  if (actual !== expected) {
+    errors.push(
+      "_shared/brain-mcp.md: MCP tool argument tables drift from spec/brain-mcp-tools.json",
+    );
+  }
+}
 
 const errors = [];
 const generatedAtMs = Date.parse(spec.generated_at);
@@ -115,6 +186,8 @@ for (const dir of skillDirs) {
     errors.push(`${dir}: money-mover "${key}" must have has_default_action=false (got true)`);
   }
 }
+
+checkMcpToolDocs(errors);
 
 if (errors.length > 0) {
   console.error(`Drift check FAILED (${errors.length}):\n`);

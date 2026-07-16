@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-import { randomUUID } from "node:crypto";
-
 const ENDPOINT = "https://mcp.brain.fi";
 const ENABLE_VAR = "BRAIN_PHASE0_VERIFY";
 
@@ -112,7 +110,6 @@ const proposal = await rpc("tools/call", {
       process.env.BRAIN_PHASE0_DESTINATION_COUNTERPARTY_ID,
     amount: process.env.BRAIN_PHASE0_AMOUNT,
     currency: process.env.BRAIN_PHASE0_CURRENCY,
-    idempotency_key: `phase0-${randomUUID()}`,
   },
 });
 const intent = proposal?.structuredContent;

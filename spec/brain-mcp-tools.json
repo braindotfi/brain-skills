@@ -1,0 +1,258 @@
+{
+  "generated_at": "2026-07-16T00:00:00.000Z",
+  "source": "brain-core/services/mcp/src/tools",
+  "note": "Public-safe MCP tool input schemas. Regenerate from brain-core when services/mcp/src/tools changes.",
+  "tools": [
+    {
+      "name": "ledger.account.get",
+      "scope": "ledger:read",
+      "mode": "read",
+      "description": "Fetch one account by id, including the most recent balance snapshot.",
+      "input_schema": {
+        "type": "object",
+        "required": ["account_id"],
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "description": "Brain account id (acct_<ulid>)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ledger.accounts.list",
+      "scope": "ledger:read",
+      "mode": "read",
+      "description": "List the tenant's accounts. Filter by status or account_type.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["active", "closed", "frozen", "pending"]
+          },
+          "account_type": { "type": "string" },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 500 }
+        }
+      }
+    },
+    {
+      "name": "ledger.transactions.list",
+      "scope": "ledger:read",
+      "mode": "read",
+      "description": "Query transactions. Filters are optional and results are newest first.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "account_id": { "type": "string" },
+          "counterparty_id": { "type": "string" },
+          "direction": {
+            "type": "string",
+            "enum": ["inflow", "outflow", "transfer", "adjustment"]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "posted", "cleared", "failed", "reversed", "disputed"]
+          },
+          "since": { "type": "string", "format": "date-time" },
+          "until": { "type": "string", "format": "date-time" },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 1000 }
+        }
+      }
+    },
+    {
+      "name": "ledger.obligations.list",
+      "scope": "ledger:read",
+      "mode": "read",
+      "description": "List obligations such as bills, invoices, subscriptions, rent, payroll, taxes, and card statements.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["upcoming", "due", "paid", "overdue", "cancelled", "disputed"]
+          },
+          "type": { "type": "string" },
+          "due_before": { "type": "string", "format": "date-time" },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 500 }
+        }
+      }
+    },
+    {
+      "name": "ledger.counterparties.list",
+      "scope": "ledger:read",
+      "mode": "read",
+      "description": "Search counterparties by name or type.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "q": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": [
+              "merchant",
+              "vendor",
+              "customer",
+              "employer",
+              "bank",
+              "wallet",
+              "exchange",
+              "tax_authority",
+              "other"
+            ]
+          },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 500 }
+        }
+      }
+    },
+    {
+      "name": "wiki.question",
+      "scope": "wiki:read",
+      "mode": "read",
+      "description": "Ask a natural-language question about the tenant's financial state.",
+      "input_schema": {
+        "type": "object",
+        "required": ["question"],
+        "properties": {
+          "question": { "type": "string", "minLength": 1, "maxLength": 2000 },
+          "as_of": { "type": "string", "format": "date-time" },
+          "max_evidence_depth": { "type": "integer", "minimum": 1, "maximum": 5 }
+        }
+      }
+    },
+    {
+      "name": "wiki.page.get",
+      "scope": "wiki:read",
+      "mode": "read",
+      "description": "Fetch a wiki memory page by slug or id.",
+      "input_schema": {
+        "type": "object",
+        "required": ["slug_or_id"],
+        "properties": {
+          "slug_or_id": {
+            "type": "string",
+            "description": "/accounts/acct_X | wpg_X | acct_X"
+          }
+        }
+      }
+    },
+    {
+      "name": "agent.action.propose",
+      "scope": "execution:propose",
+      "mode": "propose",
+      "description": "Propose a non-financial action. Brain evaluates the active policy and returns the proposal id and decision.",
+      "input_schema": {
+        "type": "object",
+        "required": ["action"],
+        "properties": {
+          "action": {
+            "type": "object",
+            "description": "Free-form action object validated against the policy DSL. Must include `kind`.",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    {
+      "name": "payment_intent.propose",
+      "scope": "payment_intent:propose",
+      "mode": "propose",
+      "description": "Propose a financial action. Execution is not performed by this tool.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "action_type",
+          "source_account_id",
+          "destination_counterparty_id",
+          "amount",
+          "currency"
+        ],
+        "properties": {
+          "action_type": {
+            "type": "string",
+            "enum": [
+              "ach_outbound",
+              "ach_inbound",
+              "wire",
+              "onchain_transfer",
+              "erp_writeback",
+              "card_payment",
+              "x402_settle",
+              "escrow_release"
+            ]
+          },
+          "source_account_id": { "type": "string" },
+          "destination_counterparty_id": { "type": "string" },
+          "amount": { "type": "string", "pattern": "^\\d+(\\.\\d+)?$" },
+          "currency": { "type": "string", "pattern": "^[A-Z]{3,4}$" },
+          "obligation_id": { "type": "string" },
+          "invoice_id": { "type": "string" },
+          "evidence_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "pay_to": { "type": "string", "pattern": "^0x[0-9a-fA-F]{40}$" },
+          "escrow_id": { "type": "string", "pattern": "^0x[0-9a-fA-F]{64}$" },
+          "job_terms_hash": { "type": "string", "pattern": "^0x[0-9a-fA-F]{64}$" }
+        }
+      }
+    },
+    {
+      "name": "payment_intent.cancel",
+      "scope": "payment_intent:propose",
+      "mode": "write",
+      "description": "Cancel a PaymentIntent the calling agent proposed while it is still cancellable.",
+      "input_schema": {
+        "type": "object",
+        "required": ["intent_id"],
+        "properties": {
+          "intent_id": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "payment_intent.list",
+      "scope": "ledger:read",
+      "mode": "read",
+      "description": "List the calling agent's own PaymentIntents.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "proposed",
+              "pending_approval",
+              "approved",
+              "paused",
+              "dispatching",
+              "rejected",
+              "executed",
+              "failed",
+              "cancelled"
+            ]
+          },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 100 }
+        }
+      }
+    },
+    {
+      "name": "raw.contribute",
+      "scope": "raw:write",
+      "mode": "write",
+      "description": "Submit a raw artifact attributed to this agent.",
+      "input_schema": {
+        "type": "object",
+        "required": ["payload"],
+        "properties": {
+          "payload": {
+            "type": "string",
+            "description": "Artifact bytes as a string. JSON, text, or base64-encoded binary."
+          },
+          "mime_type": { "type": "string", "default": "application/json" },
+          "source_ref": { "type": "object", "additionalProperties": true }
+        }
+      }
+    }
+  ]
+}

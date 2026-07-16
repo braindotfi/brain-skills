@@ -51,30 +51,30 @@ cannot be anchored. Do not fabricate opening cash or payment timing.
 
 ## The propose call
 
-Use `agent.action.propose` with `action_type: "other"`.
+Use `agent.action.propose` with `action.kind: "other"`.
 
 ```
 agent.action.propose {
-  tenant_id: <from auth context>,
-  action_type: "other",
-  payload: {
-    operation: "cash_forecast",
-    account_ids,
-    horizon,
-    scenarios,
-    projected_shortfall_date,
-    runway,
-    assumptions,
-    confidence,
-    basis
-  },
-  linked_entities: [{ type: "account", id: <account_id> }],
-  idempotency_key: <unique per proposed forecast>
+  action: {
+    kind: "other",
+    payload: {
+      operation: "cash_forecast",
+      account_ids,
+      horizon,
+      scenarios,
+      projected_shortfall_date,
+      runway,
+      assumptions,
+      confidence,
+      basis
+    },
+    linked_entities: [{ type: "account", id: <account_id> }]
+  }
 }
 ```
 
-Every proposal needs its own `idempotency_key`. The call runs through Policy and
-returns a proposal id, policy decision, and next step.
+The bearer token supplies the tenant. The call runs through Policy and returns a
+proposal id, policy decision, and next step.
 
 ## Proposal boundary
 
