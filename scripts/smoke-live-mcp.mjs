@@ -23,6 +23,7 @@ const response = await fetch("https://mcp.brain.fi", {
     authorization: `Bearer ${token}`,
     "content-type": "application/json",
     accept: "application/json, text/event-stream",
+    "mcp-protocol-version": "2025-06-18",
   },
   body: JSON.stringify({
     jsonrpc: "2.0",
@@ -36,13 +37,30 @@ const response = await fetch("https://mcp.brain.fi", {
   }),
 });
 
+const text = await response.text();
 if (!response.ok) {
   console.error(`Brain MCP initialize failed: HTTP ${response.status}`);
-  console.error(await response.text());
+  console.error(text);
   process.exit(1);
 }
 
-const body = await response.json();
+// Streamable HTTP transports may answer a single JSON-RPC request as either a
+// plain JSON body or a text/event-stream frame. Parse both, matching the
+// handling in verify-phase0.mjs.
+function parseResponse(contentType, raw) {
+  if (contentType.includes("text/event-stream")) {
+    const events = raw
+      .split(/\r?\n/)
+      .filter((line) => line.startsWith("data:"))
+      .map((line) => line.slice(5).trim())
+      .filter((line) => line.length > 0 && line !== "[DONE]");
+    if (events.length === 0) throw new Error("MCP response contained no SSE data event");
+    return JSON.parse(events.at(-1));
+  }
+  return JSON.parse(raw);
+}
+
+const body = parseResponse(response.headers.get("content-type") ?? "", text);
 if (body.jsonrpc !== "2.0" || body.result?.serverInfo === undefined) {
   console.error("Brain MCP initialize returned an invalid response.");
   console.error(JSON.stringify(body));
