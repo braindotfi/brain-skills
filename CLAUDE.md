@@ -26,9 +26,9 @@ metadata, also run `claude plugin validate . --strict`.
 Every skill frontmatter description is one physical line and 1–499 characters.
 Payment and Treasury must not name any `.execute`, `.settle`, or `.sign` tool.
 
-`scripts/check-drift.mjs` rejects a generated specification older than 30 days.
-Regenerate it from `brain-core/tools/skills-spec/generate.ts`; never refresh the
-timestamp by hand.
+`scripts/check-drift.mjs` warns when a generated specification is older than 30
+days. Regenerate it from `brain-core/tools/skills-spec/generate.ts`; never
+refresh the timestamp by hand.
 
 ## Agensi packages
 

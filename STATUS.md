@@ -13,7 +13,7 @@ signal, then proceed. Volume is not distribution.
 - [x] Strict manifest, package, and isolated install smoke tests
 - [x] Byte-identical shared MCP reference check
 - [x] All-skill no-execute and frontmatter invariant checks
-- [x] Generated agent-spec 30-day staleness guard
+- [x] Generated agent-spec 30-day staleness warning
 - [ ] Live MCP smoke test (blocked until `https://mcp.brain.fi` is deployed)
 
 ## Launch preparation
