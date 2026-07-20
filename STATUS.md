@@ -13,7 +13,7 @@ signal, then proceed. Volume is not distribution.
 - [x] Strict manifest, package, and isolated install smoke tests
 - [x] Byte-identical shared MCP reference check
 - [x] All-skill no-execute and frontmatter invariant checks
-- [x] Generated agent-spec 30-day staleness guard
+- [x] Generated agent-spec 30-day staleness warning
 - [x] `https://mcp.brain.fi` deployed and serving the OAuth 2.0 discovery
       contract (401 challenge, protected-resource metadata, auth server, scopes)
 - [ ] Live MCP smoke test run with a runtime token (`BRAIN_MCP_LIVE_TEST=true`)
