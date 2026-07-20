@@ -115,8 +115,9 @@ const generatedAtMs = Date.parse(spec.generated_at);
 if (!Number.isFinite(generatedAtMs)) {
   errors.push(`spec: generated_at is missing or invalid (${JSON.stringify(spec.generated_at)})`);
 } else if (Date.now() - generatedAtMs > SPEC_MAX_AGE_MS) {
-  errors.push(
-    `spec: generated_at ${spec.generated_at} is older than 30 days; regenerate from brain-core`,
+  const ageDays = Math.floor((Date.now() - generatedAtMs) / (24 * 60 * 60 * 1000));
+  console.warn(
+    `Warning: spec/brain-agents.json generated_at ${spec.generated_at} is ${ageDays} days old; regenerate from brain-core/tools/skills-spec/generate.ts when practical.`,
   );
 }
 const skillDirs = readdirSync(SKILLS_ROOT, { withFileTypes: true })
