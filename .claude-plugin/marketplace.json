@@ -17,6 +17,7 @@
       },
       "source": ".",
       "category": "productivity",
+      "license": "MIT",
       "homepage": "https://docs.brain.fi/build/use-brain-agent-skills"
     }
   ]

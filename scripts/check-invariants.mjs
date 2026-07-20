@@ -29,6 +29,13 @@ for (const skillName of skillNames) {
   if (name === undefined || name.length === 0) {
     errors.push(`${skillName}: frontmatter name is required`);
   }
+  // The description must be a single physical line. A YAML block or folded
+  // scalar (`|` or `>`) spans multiple lines and is rejected.
+  if (/^description:\s*[|>]/m.test(frontmatter[1])) {
+    errors.push(
+      `${skillName}: frontmatter description must be one physical line, not a YAML block scalar`,
+    );
+  }
   if (description === undefined || description.length === 0) {
     errors.push(
       `${skillName}: frontmatter description is required and must be one line`,

@@ -54,9 +54,20 @@ brain-skills/
 One install adds all 11 skills and the `brain` MCP server configuration. Each
 skill activates automatically when the task matches its description.
 
-This release is `0.1.0-beta.1`. Packaging and offline installation are complete;
-the live MCP connection remains unavailable until `https://mcp.brain.fi` is
-deployed.
+This release is `0.1.0-beta.1`. Packaging and offline installation are complete.
+The `https://mcp.brain.fi` endpoint is deployed and serves the OAuth 2.0
+discovery contract (a `401` challenge whose `resource_metadata` points at the
+protected-resource document). The remaining launch gate is Phase 0: an
+authenticated end-to-end read and propose against the live server with user
+consent.
+
+## Use with other agent runtimes
+
+These skills are provider-neutral. The portable core is the Brain MCP server;
+any MCP-capable runtime can register it. Build a provider-neutral bundle with
+`npm run build:portable` and see `docs/providers/` for OpenAI, Google Gemini,
+and Anthropic examples. The Claude plugin above is one packaging target among
+several.
 
 ## Authentication
 
@@ -83,7 +94,8 @@ definitions into `spec/brain-agents.json`. CI validates the Claude plugin,
 performs an isolated marketplace installation, verifies all 11 skill packages,
 and runs `scripts/check-drift.mjs`.
 
-The live MCP smoke test is present but gated until the server is deployed.
+The live MCP smoke test is present and gated behind `BRAIN_MCP_LIVE_TEST` and a
+runtime token, so CI never requires a credential.
 
 ## Development
 

@@ -8,8 +8,8 @@ copies independently; edit `_shared/brain-mcp.md` and re-copy.
 
 - `https://mcp.brain.fi` is the canonical public remote MCP URL.
 - The plugin configures this URL automatically through its root `.mcp.json`.
-- Until the public hostname is deployed, the plugin remains a beta package and
-  live connection tests are skipped.
+- The endpoint is deployed and serves the OAuth 2.0 discovery contract below.
+  Live connection tests stay gated behind a runtime token so CI needs no secret.
 - Brain's internal/API compatibility route remains `POST /v1/agents/mcp`.
 - JSON-RPC 2.0 over single-shot HTTPS. One request, one response, one audit event.
 - Backed by the same Ledger, Wiki, and PaymentIntent code paths as Brain's HTTP API.
