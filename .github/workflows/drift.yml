@@ -17,5 +17,7 @@ jobs:
         run: npm run check:references
       - name: Check skill safety and frontmatter invariants
         run: npm run check:invariants
+      - name: Check declared scopes are served
+        run: npm run check:scopes
       - name: Validate plugin package
         run: npm test
