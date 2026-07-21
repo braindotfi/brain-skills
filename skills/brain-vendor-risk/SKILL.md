@@ -31,9 +31,8 @@ evidence before it will propose. Read only the `ledger:read`, `wiki:read`, and
    amounts, currencies, and destination-change timing.
 3. `wiki.page.get` or `wiki.question` for approved vendor context and prior review
    notes.
-4. Use payment-destination or raw-source evidence only when Brain supplies it
-   through the authenticated context. The canonical MCP contract exposes no
-   general-purpose raw read tool, so do not invent one.
+4. Use `raw.artifact.get` by `raw_id` for Brain-supplied payment-destination or
+   raw-source evidence when provenance or parsed evidence is needed.
 
 If any required evidence is unavailable, stop and name the missing item. Never
 treat a matching vendor name or an email request as destination verification.

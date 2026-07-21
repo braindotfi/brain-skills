@@ -69,13 +69,15 @@ Each call is scope-checked at invocation. A scope mismatch returns JSON-RPC
 | `payment_intent.propose` | `payment_intent:propose` | financial PaymentIntent and policy decision |
 | `payment_intent.cancel` | `payment_intent:propose` | cancelled PaymentIntent |
 | `payment_intent.list` | `ledger:read` | the calling agent's PaymentIntents |
+| `raw.artifact.get` | `raw:read` | one raw artifact's provenance and parsed evidence |
 | `raw.contribute` | `raw:write` | stored raw artifact id and digest |
 
 Only read the scopes a skill's metadata declares in `readable_data`.
 `brain-payment` and `brain-treasury` use `payment_intent.propose`. Other
-skills use `agent.action.propose`. Skills in this repo do not use
-`payment_intent.cancel`, `payment_intent.list`, or `raw.contribute` unless their
-metadata and instructions explicitly say so.
+skills use `agent.action.propose`. `brain-dispute`, `brain-fraud-anomaly`, and
+`brain-vendor-risk` use `raw.artifact.get` by raw id for source evidence. Skills
+in this repo do not use `payment_intent.cancel`, `payment_intent.list`, or
+`raw.contribute` unless their metadata and instructions explicitly say so.
 
 ## Tool arguments
 
@@ -197,6 +199,15 @@ List the calling agent's own PaymentIntents.
 | --- | --- | --- | --- |
 | `status` | string | no | enum: proposed, pending_approval, approved, paused, dispatching, rejected, executed, failed, cancelled |
 | `limit` | integer | no | minimum: 1; maximum: 100 |
+
+### `raw.artifact.get` (scope `raw:read`)
+
+Read one tenant-scoped raw artifact's provenance metadata and parsed evidence. Does not return blob_uri or mint signed URLs.
+
+| Arg | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `raw_id` | string | yes | Brain raw artifact id. |
+| `include_parsed` | boolean | no | default: true; Include parser outputs for the artifact. |
 
 ### `raw.contribute` (scope `raw:write`)
 

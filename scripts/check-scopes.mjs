@@ -26,7 +26,6 @@ const servedScopes = new Set(
 // Known residuals: no public MCP read tool exposes this scope yet. Pending
 // brain-core surface work.
 const KNOWN_UNBACKED = new Map([
-  ["raw:read", new Set(["dispute", "fraud_anomaly", "vendor_risk"])],
   ["policy:read", new Set(["compliance"])],
   ["audit:read", new Set(["compliance"])],
 ]);

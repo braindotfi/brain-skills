@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-16T00:00:00.000Z",
+  "generated_at": "2026-07-21T00:00:00.000Z",
   "source": "brain-core/services/mcp/src/tools",
   "note": "Public-safe MCP tool input schemas. Regenerate from brain-core when services/mcp/src/tools changes.",
   "tools": [
@@ -233,6 +233,24 @@
             ]
           },
           "limit": { "type": "integer", "minimum": 1, "maximum": 100 }
+        }
+      }
+    },
+    {
+      "name": "raw.artifact.get",
+      "scope": "raw:read",
+      "mode": "read",
+      "description": "Read one tenant-scoped raw artifact's provenance metadata and parsed evidence. Does not return blob_uri or mint signed URLs.",
+      "input_schema": {
+        "type": "object",
+        "required": ["raw_id"],
+        "properties": {
+          "raw_id": { "type": "string", "description": "Brain raw artifact id." },
+          "include_parsed": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include parser outputs for the artifact."
+          }
         }
       }
     },
