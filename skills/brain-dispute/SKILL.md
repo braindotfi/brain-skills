@@ -31,9 +31,8 @@ only the `ledger:read`, `wiki:read`, and `raw:read` scopes:
 3. `ledger.counterparties.list` to resolve the customer or vendor.
 4. `wiki.page.get` or `wiki.question` for delivery, communication, contract, or
    prior-case context.
-5. Use dispute records or raw-source documents only when Brain supplies them
-   through the authenticated context. The canonical MCP contract exposes no
-   general-purpose raw read tool, so do not invent one.
+5. Use `raw.artifact.get` by `raw_id` for Brain-supplied dispute records or
+   raw-source documents when provenance or parsed evidence is needed.
 
 If either required evidence class is unavailable, stop and identify the missing
 record. Do not fill an evidence gap with an unsupported narrative.

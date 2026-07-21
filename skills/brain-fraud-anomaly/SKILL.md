@@ -31,9 +31,8 @@ Brain expects `transaction` evidence before it will propose. Read only the
 2. `ledger.accounts.list` or `ledger.account.get` to confirm the affected account.
 3. `wiki.page.get` or `wiki.question` for known merchant aliases or prior user
    context when available.
-4. Use raw-source evidence only when Brain supplies it through the authenticated
-   context. The canonical MCP contract exposes no general-purpose raw read tool,
-   so do not invent one.
+4. Use `raw.artifact.get` by `raw_id` for Brain-supplied source evidence when
+   provenance or parsed evidence is needed.
 
 If the transaction cannot be resolved, stop and ask for the Brain transaction
 identifier or ingestion of the missing activity. Do not label a charge fraudulent
